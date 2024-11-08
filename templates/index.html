@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        pre {
+            background-color: #f1f3f5;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        .accuracy-card {
+            background-color: #28a745;
+            color: white;
+        }
+        .img-fluid {
+            border-radius: 10px;
+        }
+        .chart-container img {
+            cursor: pointer;
+        }
+        .modal-dialog {
+            max-width: 90%;
+        }
+        .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+        .modal-body {
+            padding: 0;
+        }
+        .modal-body img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-chart-line me-2"></i>Stock Price Predictor</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <div class="card accuracy-card mb-4">
+                    <div class="card-body text-center">
+                        <h2 class="card-title"><i class="fas fa-bullseye me-2"></i>Model Accuracy</h2>
+                        <p class="card-text display-4">{{ "%.2f"|format(accuracy * 100) }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="chart-container">
+                    <h2 class="mb-3"><i class="fas fa-weight-hanging me-2"></i>Feature Importance</h2>
+                    <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature Importance" class="img-fluid" onclick="openModal('featureImportanceModal')">
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="chart-container">
+                    <h2 class="mb-3"><i class="fas fa-chart-area me-2"></i>Stock Price and Predicted Direction</h2>
+                    <img src="{{ url_for('static', filename='stock_price_prediction.png') }}" alt="Stock Price Prediction" class="img-fluid" onclick="openModal('stockPriceModal')">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals for full-screen graphs -->
+    <div class="modal fade" id="featureImportanceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature Importance" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="stockPriceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="{{ url_for('static', filename='stock_price_prediction.png') }}" alt="Stock Price Prediction" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function openModal(modalId) {
+            var modal = new bootstrap.Modal(document.getElementById(modalId));
+            modal.show();
+        }
+    </script>
+</body>
+</html>
